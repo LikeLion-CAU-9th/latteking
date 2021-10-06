@@ -9,7 +9,8 @@ const currentScoreSpan = document.querySelector('#current-score')
 const resultScore = document.querySelector('.result__score')
 const retryButton = document.querySelector('#retry')
 const counter = document.querySelector('#counter')
-const statistics = document.querySelector('.statistics')
+const avarage = document.querySelector('.statistics__avarage')
+const percentageSpan = document.querySelector('.statistics__percentage')
 
 let curScore = 0
 if (!localStorage.highScore) {
@@ -19,7 +20,9 @@ let older
 const date = [0, 0]
 const correct = [true, true]
 let scoreSum = 0
-let gameSum = 3
+let scoreSquareSum = 0
+let percentage = 0
+let gameSum = 0
 let avg = 0
 
 
@@ -32,12 +35,20 @@ var xhr2 = new XMLHttpRequest();
 xhr2.responseType = "json";
 var xhr3 = new XMLHttpRequest();
 xhr3.responseType = "json";
+var xhr4 = new XMLHttpRequest();
+xhr4.responseType = "json";
 xhr.open("GET", "https://api.countapi.xyz/get/latteking/counter")
 xhr.onload = function() {
     counter.innerText = this.response.value
 }
 xhr.send()
 
+function betweenDay(firstDate, secondDate) {     
+    var firstDateObj = new Date(firstDate.substring(0, 4), firstDate.substring(4, 6) - 1, firstDate.substring(6, 8));
+    var secondDateObj = new Date(secondDate.substring(0, 4), secondDate.substring(4, 6) - 1, secondDate.substring(6, 8));
+    var betweenTime = Math.abs(secondDateObj.getTime() - firstDateObj.getTime());
+    return Math.floor(betweenTime / (1000 * 60 * 60 * 24));
+}
 
 function startGame() {
     main.classList.add('hidden')
@@ -48,12 +59,26 @@ function startGame() {
     currentScoreSpan.innerText = '현재점수: ' + curScore
     highScoreSpan.innerText ='최고점수: ' + localStorage.highScore
     quizBox.classList.remove('hidden')
+    percentageSpan.innerText = '당신의 라떼력은 상위 %!'
+    avarage.innerText = '평균점수: 점'
     setNextQuiz()
 }
 
 function setNextQuiz() {
+    if (shuffledSongs.length <= currentSongIndex + 3) {
+        shuffledSongs = songs.sort(() => Math.random() - 0.5)
+        currentSongIndex = 0
+    }
     resetState()
-    showQuiz([shuffledSongs[currentSongIndex], shuffledSongs[currentSongIndex+1]])
+    let song1 = shuffledSongs[currentSongIndex]
+    let song2 = shuffledSongs[currentSongIndex+1]
+    let gap = betweenDay(String(song1.date), String(song2.date))
+    if (gap > 90 && gap < 1095) {
+        showQuiz([shuffledSongs[currentSongIndex], shuffledSongs[currentSongIndex+1]])
+    } else {
+        currentSongIndex += 1
+        setNextQuiz()
+    }
 }
 
 function showQuiz(songs) {
@@ -99,11 +124,7 @@ function selectAnswer(e) {
     currentSongIndex += 2
     setTimeout(function() {
         if (isCorrect) {
-            if (shuffledSongs.length > currentSongIndex + 3) {
-                setNextQuiz()
-            } else {
-                startGame()
-            }
+            setNextQuiz()
         } else {
             showResult(curScore)
         }
@@ -128,7 +149,6 @@ function showResult(score) {
     xhr2.open("GET", "https://api.countapi.xyz/update/latteking/counter?amount=" + 1);
     xhr2.onload = function() {
         gameSum = this.response.value
-        console.log(this.response.value)
         if (score > 0) {
             xhr3.open("GET", "https://api.countapi.xyz/update/latteking/score-sum?amount=" + score)
         } else {
@@ -136,10 +156,19 @@ function showResult(score) {
         }
         xhr3.onload = function() {
             scoreSum = this.response.value
-            console.log(scoreSum)
             avg = (scoreSum / gameSum).toFixed(1)
-            console.log(avg)
-            statistics.innerText = "평균점수: " + avg + "점"
+            avarage.innerText = "평균점수: " + avg + "점"
+            if (score > 0) {
+                xhr4.open("GET", "https://api.countapi.xyz/update/latteking/score-square-sum?amount=" + (score)**2)
+            } else {
+                xhr4.open("GET", "https://api.countapi.xyz/get/latteking/score-square-sum")
+            }
+            xhr4.onload = function() {
+                scoreSquareSum = this.response.value
+                percentage = (computeNormalDistribution(score, gameSum, scoreSum, scoreSquareSum)*100).toFixed(1)
+                percentageSpan.innerText = "당신의 라떼력은 상위 " + percentage +"%!"
+            }
+            xhr4.send()
         }
         xhr3.send()
     }
@@ -147,6 +176,20 @@ function showResult(score) {
     quizBox.classList.add('hidden')
     result.classList.remove('hidden')
     resultScore.innerText = String(score) + "점"
+}
+
+function computeNormalDistribution(x, gameSum, scoreSum, scoreSquareSum) {
+    const mean = scoreSum / gameSum
+    const scoreSquareMean = scoreSquareSum / gameSum
+    const sd = (scoreSquareMean - (mean**2)) ** (0.5)
+    const Z = (x-mean)/sd
+    const T = 1 / (1 + 0.2316419*  Math.abs(Z))
+    const D = 0.3989423 * Math.exp(-Z*Z/2);
+    let prob = D*T*(.3193815+T*(-.3565638+T*(1.781478+T*(-1.821256+T*1.330274))))
+    if (Z<0) {
+        prob = 1 - prob
+    }
+    return prob
 }
 
 const songs = [

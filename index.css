@@ -138,7 +138,9 @@ body {
 }
 
 .statistics {
-    flex: 1
+    font-size: 1.5rem;
+    margin: 1em;
+    text-align: center;
 }
 
 .result__retry-button {
