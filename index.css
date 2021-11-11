@@ -29,6 +29,10 @@ body {
     color: var(--latte-brown);
 }
 
+.white {
+    color: white !important;
+}
+
 .btn {
     background-color: var(--milk);
     outline: none;
@@ -121,11 +125,11 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 5vh 0;
+    padding: 0 0 5vh; 
 }
 
 .result__logo {
-    height: 40vh;
+    height: 50vh;
 }
 
 .result__title {
@@ -145,10 +149,26 @@ body {
 
 .result__retry-button {
     font-size: 1.5rem;
+    margin-bottom: 15px;
     height: 2em;
     width: 70%;
     border: 2px solid black;
     border-radius: 0.5em;   
+}
+
+.pop-up {
+    font-size: 1.6rem;
+    position: absolute;
+    background-color: #88e3ff;
+    min-width: 30%;
+    min-height: 5%;
+    padding: 0.5em;
+    border: 3px solid black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
 }
 
 @font-face {
