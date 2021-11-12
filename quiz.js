@@ -11,7 +11,7 @@ const retryButton = document.querySelector('#retry')
 const shareButton = document.querySelector('#share')
 const counter = document.querySelector('#counter')
 const counterBox = document.querySelector('.main__counter')
-const avarage = document.querySelector('.statistics__avarage')
+const rank = document.querySelector('.result__rank')
 const percentageSpan = document.querySelector('.statistics__percentage')
 const popUp = document.querySelector('.pop-up')
 const logo = document.querySelector('.result__logo')
@@ -47,7 +47,6 @@ function shareUrl() {
 
 startButton.addEventListener('click', startGame)
 retryButton.addEventListener('click', startGame)
-shareButton.addEventListener('click', shareUrl)
 
 var xhr = new XMLHttpRequest();
 xhr.responseType = "json";
@@ -86,7 +85,6 @@ function startGame() {
     highScoreSpan.innerText ='최고점수: ' + localStorage.highScore
     quizBox.classList.remove('hidden')
     percentageSpan.innerText = '당신의 라떼력은 상위 %!'
-    avarage.innerText = '평균점수: 점'
     setNextQuiz()
 }
 
@@ -102,7 +100,6 @@ function setNextQuiz() {
     if (gap > 180 && gap < 1095) {
         showQuiz([shuffledSongs[currentSongIndex], shuffledSongs[currentSongIndex+1]])
     } else {
-        console.log("pass")
         currentSongIndex += 1
         setNextQuiz()
     }
@@ -192,7 +189,6 @@ function setResult(score) {
         xhr3.onload = function() {
             scoreSum = this.response.value
             avg = (scoreSum / gameSum).toFixed(1)
-            avarage.innerText = "평균점수: " + avg + "점"
             if (score > 0) {
                 xhr4.open("GET", "https://api.countapi.xyz/update/latteking/score-square-sum?amount=" + (score)**2)
             } else {
@@ -201,11 +197,23 @@ function setResult(score) {
             xhr4.onload = function() {
                 scoreSquareSum = this.response.value
                 percentage = (computeNormalDistribution(score, gameSum, scoreSum, scoreSquareSum)*100).toFixed(1)
-                percentageSpan.innerText = "당신의 라떼력은 상위 " + percentage +"%!"
-                if (percentage > 50) { logo.src="img/newbie.png"; }
-                else if (percentage > 20) { logo.src="img/prince.png"; }
-                else if (percentage > 5) { logo.src="img/king.png"; }
-                else if (percentage > 0) { logo.src="img/god.png"; }
+                percentageSpan.innerText = "(상위 " + percentage +"%)"
+                if (percentage > 50) { 
+                    logo.src="img/newbie.png"; 
+                    rank.innerText = "노래평민"
+                }
+                else if (percentage > 20) { 
+                    logo.src="img/prince.png"; 
+                    rank.innerText = "노래왕자"
+                }
+                else if (percentage > 5) { 
+                    logo.src="img/king.png"; 
+                    rank.innerText = "노래왕"
+                }
+                else if (percentage >= 0) { 
+                    logo.src="img/god.png"; 
+                    rank.innerText = "노래도사"
+            }
             }
             xhr4.send()
         }
@@ -492,7 +500,7 @@ const songs = [
     },
     {
         title: '하동균 - 그녀를 사랑해줘요',
-        date: 2000627,
+        date: 20060627,
         video: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/PlOPWA_DE4U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
     },
     {
