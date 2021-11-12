@@ -2,37 +2,6 @@
     --latte-brown: #B94413;
     --milk: #EBE4BD;
 }
-<<<<<<< HEAD
-=======
-
-@media screen and (max-width : 400px){
-    body {
-        margin: 0;
-        display: flex;
-        width: 100vw;
-        height: 100vh;
-        justify-content: center;
-        align-items: center;
-        font-family: 'GmarketSansTTFBold';    
-    }
-    
-    .correct {
-        background-color: greenyellow !important;
-    }
-      
-    .wrong {
-        background-color: red !important;
-    }
-    
-    .hidden {
-        display: none !important;
-    }
-    
-    .latte-brown {
-        color: var(--latte-brown);
-    }
-    
->>>>>>> e16e3477ca0515aebba83d5d1af35df52c68464b
 
 body {
     margin: 0;
