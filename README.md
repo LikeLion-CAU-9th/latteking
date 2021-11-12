@@ -2,7 +2,7 @@
 
 ## Our service
 
-the game to choose albums which are packaged more early.
+A game to choose which albums were released first.
 
 ## Our Team
 
