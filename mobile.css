@@ -1,3 +1,8 @@
+:root {
+    --latte-brown: #B94413;
+    --milk: #EBE4BD;
+}
+
 @media screen and (max-width : 400px){
     body {
         margin: 0;
