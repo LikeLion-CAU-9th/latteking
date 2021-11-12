@@ -57,7 +57,7 @@ var xhr4 = new XMLHttpRequest();
 xhr4.responseType = "json";
 counterBox.classList.add('white')
 counter.classList.add('white')
-xhr.open("GET", "https://api.countapi.xyz/get/latteking/counter")
+xhr.open("GET", "https://api.countapi.xyz/get/latte-king/counter")
 xhr.onload = function() {
     counter.innerText = this.response.value
     setTimeout(() => {
@@ -178,21 +178,21 @@ function showResult() {
 }
 
 function setResult(score) {
-    xhr2.open("GET", "https://api.countapi.xyz/update/latteking/counter?amount=" + 1);
+    xhr2.open("GET", "https://api.countapi.xyz/update/latte-king/counter?amount=" + 1);
     xhr2.onload = function() {
         gameSum = this.response.value
         if (score > 0) {
-            xhr3.open("GET", "https://api.countapi.xyz/update/latteking/score-sum?amount=" + score)
+            xhr3.open("GET", "https://api.countapi.xyz/update/latte-king/score-sum?amount=" + score)
         } else {
-            xhr3.open("GET", "https://api.countapi.xyz/get/latteking/score-sum")
+            xhr3.open("GET", "https://api.countapi.xyz/get/latte-king/score-sum")
         }
         xhr3.onload = function() {
             scoreSum = this.response.value
             avg = (scoreSum / gameSum).toFixed(1)
             if (score > 0) {
-                xhr4.open("GET", "https://api.countapi.xyz/update/latteking/score-square-sum?amount=" + (score)**2)
+                xhr4.open("GET", "https://api.countapi.xyz/update/latte-king/score-square-sum?amount=" + (score)**2)
             } else {
-                xhr4.open("GET", "https://api.countapi.xyz/get/latteking/score-square-sum")
+                xhr4.open("GET", "https://api.countapi.xyz/get/latte-king/score-square-sum")
             }
             xhr4.onload = function() {
                 scoreSquareSum = this.response.value
@@ -487,11 +487,6 @@ const songs = [
         title: '거북이 - 비행기',
         date: 20060720,
         video: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/dXQzwNb8G7g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-    },
-    {
-        title: 'MC몽 - 너에게 쓰는 편지(Part.2)',
-        date: 20060925,
-        video: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/bMZtlYj9Qqs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
     },
     {
         title: '버즈 - 남자를 몰라',
