@@ -7,9 +7,11 @@ body {
     margin: 0;
     display: flex;
     width: 100vw;
-    height: 100vh;
+    max-height: 100vh;
+    padding: 1vh 0;
+    box-sizing: border-box;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     font-family: 'GmarketSansTTFBold';    
 }
 
@@ -44,7 +46,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 0 10vh;
 }
 
 .main__logo {
@@ -120,7 +121,7 @@ body {
 }
 
 .control__select-btn {
-    font-size: 1rem;
+    font-size: 1.3rem;
     width: 100%;
     height:70%;
     padding-top: 0.2em;
@@ -137,16 +138,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 0 5vh; 
+    padding: 5vh 0 0; 
 }
 
 .character-box {
-    height: 210px;
+    height: 240px;
     width: 240px;
-    overflow: hidden;
-    display: flex;
     justify-content: center;
-    align-items: end;
+    align-items: center;
 }
 
 .result__logo {
@@ -177,7 +176,7 @@ body {
 }
 
 .form {
-    font-size: 0.4rem;
+    font-size: 0.8rem;
     text-decoration: underline;
     color: #888888;
     font-family: 'Noto Sans KR';
