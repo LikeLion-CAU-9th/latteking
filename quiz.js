@@ -30,30 +30,11 @@ let gameSum = 0
 let avg = 0
 
 
-function getParameterByName(name, url = window.location.href) {
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
-
-const sharedScore = getParameterByName('score');
-if (sharedScore != null) {
-    decryptedScore = parseInt(sharedScore, 30) - 7951326
-    if ((decryptedScore % 3143584) % 7531 == 0) {
-        decryptedScore = parseInt(decryptedScore / 3143584)
-        document.querySelector('meta[property="og:description"]').setAttribute("content", decryptedScore + "점!!");
-    }
-}
 
 function shareUrl() {
     const textArea = document.createElement('textarea')
-    const randNum = Math.floor(Math.random() * 357)
-    encryptedScore = (curScore*3143584 + 7951326 + randNum * 7531).toString(30)
     document.body.appendChild(textArea) 
-    textArea.value = window.location.protocol + "//" + window.location.host + window.location.pathname + "?score=" + encryptedScore;
+    textArea.value = window.location.protocol + "//" + window.location.host + window.location.pathname
     textArea.select();
     document.execCommand('copy')
     document.body.removeChild(textArea)
