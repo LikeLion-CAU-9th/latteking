@@ -40,6 +40,8 @@ function redirect() {
     }
 }
 
+redirect()
+
 
 
 function shareUrl() {
