@@ -18,6 +18,7 @@
         <span class="main__title">
             <span class="latte-brown">Latte</span> 노래왕
         </span>
+        <span class="main__description">먼저 나온 노래를 맞춰 당신의 라떼력을 증명하세요!</span>
         <button id="start-btn" class="btn main__start-btn">시작하기</button>
         <span class="main__counter">지금까지 <span id="counter"></span>명이<br>노래왕에 도전했습니다!</span>
     </div>
@@ -36,29 +37,24 @@
         </div>
         <div class="screen__vs">VS</div>
         <div class="control">
-            <button class="btn control__select-btn">버튼</button>
+            <button class="btn control__select-btn control__select-btn--bottom">버튼</button>
         </div>
 
         <div id="movie2" class="screen__movie"></div>
     </div>
     </div>
     <div class="result hidden">
-        <img class="result__logo" src="img/logo.png">
-        <span class="result__title">당신의 점수는?</span>
-        <span class="result__score">점</span>
-        <div class="statistics">
-            <div class="statistics__percentage">당신의 라떼력은 상위 %!</div>
-            <div class="statistics__avarage">평균점수: 점</div>
+        <span class="result__title">당신의 결과는?</span>
+        <span class="result__rank">노래평민</span>
+        <div class="character-box">
+            <img class="result__logo" src="img/logo.png">
         </div>
+        <span class="result__score">점</span><span class="statistics__percentage">(상위 %)</span>
         <button id="retry" class="btn result__retry-button">다시 도전하기</button>
-        <button id="share" class="btn result__retry-button">점수 자랑하기</button>
-        <button id="share" class="btn result__retry-button"
-            onclick="location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSdBMXdBODLGej1AkmW_E_kcZbYD9lYweuGNFzixhEbjB-dAJA/viewform';">의견
-            보내기</button>
-
+        <a class="form" target="_blank" href='https://docs.google.com/forms/d/e/1FAIpQLSdBMXdBODLGej1AkmW_E_kcZbYD9lYweuGNFzixhEbjB-dAJA/viewform'>의견 보내기</a>
     </div>
     <div class="pop-up hidden">링크가 복사됐습니다!</div>
-    <script src="quiz.js"></script>
+    <script src="quiz-mobile.js"></script>
 </body>
 
 </html>
