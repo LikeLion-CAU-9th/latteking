@@ -12,6 +12,16 @@
     <meta property="og:description" content="당신의 라떼력을 확인해보세요!">
     <link href="mobile.css" rel="stylesheet">
     <title>라떼 노래왕</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JFZLST0EYR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-JFZLST0EYR');
+    </script>
 </head>
 
 <body>
@@ -31,19 +41,19 @@
         </div>
         <div class="screen">
             <div id="movie1" class="screen__movie"></div>
-            
-        
 
-        <div class="control">
-            <button class="btn control__select-btn">버튼</button>
-        </div>
-        <div class="screen__vs">VS</div>
-        <div class="control">
-            <button class="btn control__select-btn control__select-btn--bottom">버튼</button>
-        </div>
 
-        <div id="movie2" class="screen__movie"></div>
-    </div>
+
+            <div class="control">
+                <button class="btn control__select-btn">버튼</button>
+            </div>
+            <div class="screen__vs">VS</div>
+            <div class="control">
+                <button class="btn control__select-btn control__select-btn--bottom">버튼</button>
+            </div>
+
+            <div id="movie2" class="screen__movie"></div>
+        </div>
     </div>
     <div class="result hidden">
         <span class="result__title">당신의 결과는?</span>
@@ -53,7 +63,9 @@
         </div>
         <span class="result__score">점</span><span class="statistics__percentage">(상위 %)</span>
         <button id="retry" class="btn result__retry-button">다시 도전하기</button>
-        <a class="form" target="_blank" href='https://docs.google.com/forms/d/e/1FAIpQLSdBMXdBODLGej1AkmW_E_kcZbYD9lYweuGNFzixhEbjB-dAJA/viewform'>의견 보내기</a>
+        <a class="form" target="_blank"
+            href='https://docs.google.com/forms/d/e/1FAIpQLSdBMXdBODLGej1AkmW_E_kcZbYD9lYweuGNFzixhEbjB-dAJA/viewform'>의견
+            보내기</a>
     </div>
     <div class="pop-up hidden">링크가 복사됐습니다!</div>
     <script src="quiz.js"></script>
