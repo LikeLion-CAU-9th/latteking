@@ -7,8 +7,8 @@ body {
     margin: 0;
     display: flex;
     width: 100vw;
-    height: 100vh;
-    padding: 1vh 0 10vh;
+    height: 90vh;
+    padding: 1vh 0 1vh;
     box-sizing: border-box;
     justify-content: center;
     align-items: center;
