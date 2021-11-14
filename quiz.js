@@ -82,7 +82,9 @@ function startGame() {
     currentSongIndex = 0
     curScore = 0
     currentScoreSpan.innerText = '현재점수: ' + curScore
-    highScoreSpan.innerText ='최고점수: ' + localStorage.highScore
+    if (localStorage.highScore) {
+        highScoreSpan.innerText = '최고점수: ' + localStorage.highScore
+    } else { highScoreSpan.innerText = ""}
     quizBox.classList.remove('hidden')
     percentageSpan.innerText = '당신의 라떼력은 상위 %!'
     setNextQuiz()
@@ -136,8 +138,10 @@ function selectAnswer(e) {
     const isCorrect = correct[selectedIndex]
     if (isCorrect){
         curScore += 1
-        localStorage.highScore = Math.max(curScore, localStorage.highScore)
-        highScoreSpan.innerText ='최고점수: ' + localStorage.highScore
+        if (localStorage.highScore) {
+            localStorage.highScore = Math.max(curScore, localStorage.highScore)
+            highScoreSpan.innerText = '최고점수: ' + localStorage.highScore
+        } else { highScoreSpan.innerText = ""}
         currentScoreSpan.innerText = '현재점수: ' + curScore
     }
     for (var i = 0; i < 2; i++) {
