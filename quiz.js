@@ -195,7 +195,6 @@ function setResult(score) {
         } else {
             sumUrl = "https://api.countapi.xyz/get/latteking/score-sum"
         }
-        console.log(gameCount)
         fetchCounter(sumUrl, (sumCount) => {
             scoreSum = sumCount
             avg = (scoreSum / gameSum).toFixed(1)
@@ -204,7 +203,6 @@ function setResult(score) {
             } else {
                 squareSumUrl = "https://api.countapi.xyz/get/latteking/score-square-sum"
             }
-            console.log(sumCount)
             fetchCounter(squareSumUrl, (squareSumCount) => {
                 scoreSquareSum = squareSumCount
                 percentage = (computeNormalDistribution(score, gameSum, scoreSum, scoreSquareSum)*100).toFixed(1)
@@ -225,7 +223,6 @@ function setResult(score) {
                     logo.src="img/god.png"; 
                     rank.innerText = "노래도사"
                 }
-                console.log(squareSumCount)
             })
         }) 
     })
