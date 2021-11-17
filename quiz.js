@@ -30,6 +30,20 @@ let gameSum = 0
 let avg = 0
 
 
+startButton.addEventListener('click', startGame)
+retryButton.addEventListener('click', startGame)
+counterBox.classList.add('white')
+counter.classList.add('white')
+
+fetchCounter("https://api.countapi.xyz/get/latteking/counter", (count) => {
+    counter.innerText = count
+    setTimeout(() => {
+        counterBox.classList.remove('white');
+        counter.classList.remove('white');
+        main.classList.remove('hidden')
+    }, 0)
+})
+
 function shareUrl() {
     const textArea = document.createElement('textarea')
     document.body.appendChild(textArea) 
@@ -43,30 +57,22 @@ function shareUrl() {
     }, 1000)
 }
 
-
-startButton.addEventListener('click', startGame)
-retryButton.addEventListener('click', startGame)
-
-var xhr = new XMLHttpRequest();
-xhr.responseType = "json";
-var xhr2 = new XMLHttpRequest();
-xhr2.responseType = "json";
-var xhr3 = new XMLHttpRequest();
-xhr3.responseType = "json";
-var xhr4 = new XMLHttpRequest();
-xhr4.responseType = "json";
-counterBox.classList.add('white')
-counter.classList.add('white')
-xhr.open("GET", "https://api.countapi.xyz/get/latte-king/counter")
-xhr.onload = function() {
-    counter.innerText = this.response.value
-    setTimeout(() => {
-        counterBox.classList.remove('white');
-        counter.classList.remove('white');
-        main.classList.remove('hidden')
-    }, 0)
+function fetchCounter(url, cb) {
+    fetch(url)
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error('Error')
+        }
+        return response.json();
+    })
+    .then((data) => {
+        value = JSON.stringify(data.value)
+        cb(value)
+    })
+    .catch((err) => {
+        console.log(err)
+    })
 }
-xhr.send()
 
 function betweenDay(firstDate, secondDate) {     
     var firstDateObj = new Date(firstDate.substring(0, 4), firstDate.substring(4, 6) - 1, firstDate.substring(6, 8));
@@ -182,24 +188,25 @@ function showResult() {
 }
 
 function setResult(score) {
-    xhr2.open("GET", "https://api.countapi.xyz/update/latte-king/counter?amount=" + 1);
-    xhr2.onload = function() {
-        gameSum = this.response.value
+    fetchCounter("https://api.countapi.xyz/update/latteking/counter?amount=" + 1, (gameCount) => {
+        gameSum = gameCount
         if (score > 0) {
-            xhr3.open("GET", "https://api.countapi.xyz/update/latte-king/score-sum?amount=" + score)
+            sumUrl = "https://api.countapi.xyz/update/latteking/score-sum?amount=" + score
         } else {
-            xhr3.open("GET", "https://api.countapi.xyz/get/latte-king/score-sum")
+            sumUrl = "https://api.countapi.xyz/get/latteking/score-sum"
         }
-        xhr3.onload = function() {
-            scoreSum = this.response.value
+        console.log(gameCount)
+        fetchCounter(sumUrl, (sumCount) => {
+            scoreSum = sumCount
             avg = (scoreSum / gameSum).toFixed(1)
             if (score > 0) {
-                xhr4.open("GET", "https://api.countapi.xyz/update/latte-king/score-square-sum?amount=" + (score)**2)
+                squareSumUrl = "https://api.countapi.xyz/update/latteking/score-square-sum?amount=" + (score)**2
             } else {
-                xhr4.open("GET", "https://api.countapi.xyz/get/latte-king/score-square-sum")
+                squareSumUrl = "https://api.countapi.xyz/get/latteking/score-square-sum"
             }
-            xhr4.onload = function() {
-                scoreSquareSum = this.response.value
+            console.log(sumCount)
+            fetchCounter(squareSumUrl, (squareSumCount) => {
+                scoreSquareSum = squareSumCount
                 percentage = (computeNormalDistribution(score, gameSum, scoreSum, scoreSquareSum)*100).toFixed(1)
                 percentageSpan.innerText = "(상위 " + percentage +"%)"
                 if (percentage > 50) { 
@@ -217,13 +224,11 @@ function setResult(score) {
                 else if (percentage >= 0) { 
                     logo.src="img/god.png"; 
                     rank.innerText = "노래도사"
-            }
-            }
-            xhr4.send()
-        }
-        xhr3.send()
-    }
-    xhr2.send();
+                }
+                console.log(squareSumCount)
+            })
+        }) 
+    })
     resultScore.innerText = String(score) + "점"
 }
 
