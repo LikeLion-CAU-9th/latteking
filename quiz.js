@@ -35,7 +35,7 @@ retryButton.addEventListener('click', startGame)
 counterBox.classList.add('white')
 counter.classList.add('white')
 
-fetchCounter("https://api.countapi.xyz/get/latteking/counter", (count) => {
+fetchCounter("https://api.countapi.xyz/get/latte-king/counter", (count) => {
     counter.innerText = count
     setTimeout(() => {
         counterBox.classList.remove('white');
@@ -188,20 +188,20 @@ function showResult() {
 }
 
 function setResult(score) {
-    fetchCounter("https://api.countapi.xyz/update/latteking/counter?amount=" + 1, (gameCount) => {
+    fetchCounter("https://api.countapi.xyz/update/latte-king/counter?amount=" + 1, (gameCount) => {
         gameSum = gameCount
         if (score > 0) {
-            sumUrl = "https://api.countapi.xyz/update/latteking/score-sum?amount=" + score
+            sumUrl = "https://api.countapi.xyz/update/latte-king/score-sum?amount=" + score
         } else {
-            sumUrl = "https://api.countapi.xyz/get/latteking/score-sum"
+            sumUrl = "https://api.countapi.xyz/get/latte-king/score-sum"
         }
         fetchCounter(sumUrl, (sumCount) => {
             scoreSum = sumCount
             avg = (scoreSum / gameSum).toFixed(1)
             if (score > 0) {
-                squareSumUrl = "https://api.countapi.xyz/update/latteking/score-square-sum?amount=" + (score)**2
+                squareSumUrl = "https://api.countapi.xyz/update/latte-king/score-square-sum?amount=" + (score)**2
             } else {
-                squareSumUrl = "https://api.countapi.xyz/get/latteking/score-square-sum"
+                squareSumUrl = "https://api.countapi.xyz/get/latte-king/score-square-sum"
             }
             fetchCounter(squareSumUrl, (squareSumCount) => {
                 scoreSquareSum = squareSumCount
